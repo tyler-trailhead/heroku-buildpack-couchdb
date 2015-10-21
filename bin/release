@@ -1,8 +1,8 @@
-#!/bin/sh -x
+#!/bin/sh 
 
 cat << EOF
 ---
 addons: []
 default_process_types:
-  db: couchdb  
+  couchdb: /app/etc/init.d/couchdb start
 EOF
