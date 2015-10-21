@@ -103,6 +103,7 @@ fi
 make > /dev/null && make install > /dev/null
 echo "Installed couchdb"
 
+touch $BUILD_DIR/yes_this_worked
 
 # cat > $BUILD_DIR/etc/default/couchdb << EOM
 # # Sourced by init script for configuration.
