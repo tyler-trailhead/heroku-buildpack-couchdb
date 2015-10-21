@@ -97,17 +97,17 @@ make install >> $LOG 2>&1
 echo "-----> Installed erlang"
 
 
-if [ ! -e $CACHE_DIR/apache-couchdb-1.6.0 ]; then
+if [ ! -e $CACHE_DIR/apache-couchdb-1.6.1 ]; then
     # get couchdb
-    wget -O $CACHE_DIR/apache-couchdb-1.6.0.tar.gz http://ftp.carnet.hr/misc/apache/couchdb/source/1.6.0/apache-couchdb-1.6.0.tar.gz >> $LOG 2>&1
-    tar -xzf $CACHE_DIR/apache-couchdb-1.6.0.tar.gz -C $CACHE_DIR >> $LOG 2>&1
-    rm -f $CACHE_DIR/apache-couchdb-1.6.0.tar.gz
+    wget -O $CACHE_DIR/apache-couchdb-1.6.1.tar.gz http://mirror.csclub.uwaterloo.ca/apache/couchdb/source/1.6.1/apache-couchdb-1.6.1.tar.gz >> $LOG 2>&1
+    tar -xzf $CACHE_DIR/apache-couchdb-1.6.1.tar.gz -C $CACHE_DIR >> $LOG 2>&1
+    rm -f $CACHE_DIR/apache-couchdb-1.6.1.tar.gz
     echo "-----> Downloaded couchdb"
 fi
 
 
 # build couchdb
-cd $CACHE_DIR/apache-couchdb-1.6.0
+cd $CACHE_DIR/apache-couchdb-1.6.1
 export PATH=$PATH:$BUILD_DIR/usr/bin/:$BUILD_DIR/usr/local/bin
 export ICU_CONFIG="$BUILD_DIR/usr/bin/icu-config --detect-prefix"
 export ICU_CPPFLAGS="-I$BUILD_DIR/usr/include/"
@@ -142,6 +142,9 @@ cat > $BUILD_DIR/etc/couchdb/local.ini << EOM
 [httpd]
 port = PORT
 bind_address = "0.0.0.0"
+
+[log]
+file = /var/log/couchdb/couch.log
 EOM
 
 # configure proper folders
