@@ -7,9 +7,6 @@ CACHE_DIR=$2
 BUILD_DIR=$CACHE_DIR/app
 ENV_DIR=$3
 
-LOG=$BUILD_DIR/log
-echo '' > $LOG
-
 export_env_dir() {
   env_dir=$ENV_DIR
   whitelist_regex=${2:-''}
@@ -31,6 +28,9 @@ fi
 if [ ! -e $BUILD_DIR ]; then
     mkdir -p $BUILD_DIR
 fi
+
+LOG=$BUILD_DIR/log
+echo '' > $LOG
 
 # create dir to put all our stuff
 
