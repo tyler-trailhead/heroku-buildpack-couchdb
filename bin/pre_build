@@ -6,11 +6,11 @@
 
 set -e
 
-cd ~/app-root/runtime/
+# ./pre_build BUILD_DIR
+
+cd $1
 
 # create dir to put all our stuff
-mkdir -p couchdb
-cd couchdb
 
 if [ ! -e js-1.8.5 ]; then
     # get spidermonkey
