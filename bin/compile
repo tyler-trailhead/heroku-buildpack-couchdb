@@ -23,7 +23,7 @@ export_env_dir() {
   fi
 }
 
-export_env_dir()
+export_env_dir
 
 if [ ! -e $CACHE_DIR ]; then
     mkdir -p $CACHE_DIR
@@ -136,6 +136,7 @@ COUCHDB_RESPAWN_TIMEOUT=5
 COUCHDB_OPTIONS=
 EOM
 
+echo "-----> Setting port to $PORT"
 # change port and bind_address where openshift expects DIY apps to serve
 cat > $BUILD_DIR/etc/couchdb/local.ini << EOM
 [httpd]
