@@ -43,12 +43,18 @@ fi
 
 # build and install ICU
 cd $CACHE_DIR/icu/source
-./configure --prefix=$CACHE_DIR/usr/
+if [ ! -e ./.configured ]; then
+    ./configure --prefix=$CACHE_DIR/usr/
+    touch .configured
+fi
 make
 
 # build and install spidermonkey
 cd $CACHE_DIR/js-1.8.5/js/src
-./configure --prefix=$CACHE_DIR/usr/
+if [ ! -e ./.configured ]; then
+    ./configure --prefix=$CACHE_DIR/usr/
+    touch .configured
+fi
 make
 # some step ahead chokes if this file exists
 # rm js
