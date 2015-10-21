@@ -12,31 +12,31 @@ fi
 
 # create dir to put all our stuff
 
-if [ ! -e $BUILD_DIR/js-1.8.5 ]; then
+if [ ! -e $CACHE_DIR/js-1.8.5 ]; then
     # get spidermonkey
-    wget -O $BUILD_DIR/js.tar.gz http://ftp.mozilla.org/pub/mozilla.org/js/js185-1.0.0.tar.gz 
-    tar -xzf $BUILD_DIR/js.tar.gz -C $BUILD_DIR
-    rm -f $BUILD_DIR/js.tar.gz
+    wget -O $CACHE_DIR/js.tar.gz http://ftp.mozilla.org/pub/mozilla.org/js/js185-1.0.0.tar.gz 
+    tar -xzf $CACHE_DIR/js.tar.gz -C $CACHE_DIR
+    rm -f $CACHE_DIR/js.tar.gz
 fi
 
 if [ ! -e otp_src_17.1 ]; then
     # get erlang
-    wget -O $BUILD_DIR/otp_src_17.1.tar.gz http://www.erlang.org/download/otp_src_17.1.tar.gz
-    tar -xzf $BUILD_DIR/otp_src_17.1.tar.gz -C $BUILD_DIR
-    rm -f $BUILD_DIR/otp_src_17.1.tar.gz
+    wget -O $CACHE_DIR/otp_src_17.1.tar.gz http://www.erlang.org/download/otp_src_17.1.tar.gz
+    tar -xzf $CACHE_DIR/otp_src_17.1.tar.gz -C $CACHE_DIR
+    rm -f $CACHE_DIR/otp_src_17.1.tar.gz
 fi
 
 if [ ! -e apache-couchdb-1.6.0 ]; then
     # get couchdb
-    wget -O $BUILD_DIR/ http://ftp.carnet.hr/misc/apache/couchdb/source/1.6.0/apache-couchdb-1.6.0.tar.gz
-    tar -xzf $BUILD_DIR/apache-couchdb-1.6.0.tar.gz -C $BUILD_DIR
-    rm -f $BUILD_DIR/apache-couchdb-1.6.0.tar.gz
+    wget -O $CACHE_DIR/ http://ftp.carnet.hr/misc/apache/couchdb/source/1.6.0/apache-couchdb-1.6.0.tar.gz
+    tar -xzf $CACHE_DIR/apache-couchdb-1.6.0.tar.gz -C $CACHE_DIR
+    rm -f $CACHE_DIR/apache-couchdb-1.6.0.tar.gz
 fi
 
 if [ ! -e icu ]; then
     # get ICU
-    wget -O $BUILD_DIR/icu4c-4_8_1_1-src.tgz http://download.icu-project.org/files/icu4c/4.8.1.1/icu4c-4_8_1_1-src.tgz
-    tar -xzf $BUILD_DIR/icu4c-4_8_1_1-src.tgz -C $CACHE_DIR
+    wget -O $CACHE_DIR/icu4c-4_8_1_1-src.tgz http://download.icu-project.org/files/icu4c/4.8.1.1/icu4c-4_8_1_1-src.tgz
+    tar -xzf $CACHE_DIR/icu4c-4_8_1_1-src.tgz -C $CACHE_DIR
     rm -f $CACHE_DIR/icu4c-4_8_1_1-src.tgz
 fi
 
