@@ -1,3 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh 
 
+echo "-----> CouchDB Buildpack"
 exit 0

@@ -40,7 +40,7 @@ fi
 # build and install ICU
 cd $CACHE_DIR/icu/source
 if [ ! -e ./.configured ]; then
-    ./configure --prefix=$BUILD_DIR/usr/ > $LOG 2>&1
+    ./configure --prefix=/app/usr/ > $LOG 2>&1
     touch .configured
     echo "-----> Configured icu"
 fi
@@ -48,6 +48,7 @@ make > $LOG 2>&1
 make install > $LOG 2>&1
 echo "-----> Installed icu"
 
+exit 0
 
 if [ ! -e $CACHE_DIR/js-1.8.5 ]; then
     # get spidermonkey
