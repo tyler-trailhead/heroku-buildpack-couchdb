@@ -85,7 +85,7 @@ echo "Installed erlang"
 
 if [ ! -e $CACHE_DIR/apache-couchdb-1.6.0 ]; then
     # get couchdb
-    wget -O $CACHE_DIR/ http://ftp.carnet.hr/misc/apache/couchdb/source/1.6.0/apache-couchdb-1.6.0.tar.gz
+    wget -O $CACHE_DIR/apache-couchdb-1.6.0.tar.gz http://ftp.carnet.hr/misc/apache/couchdb/source/1.6.0/apache-couchdb-1.6.0.tar.gz
     tar -xzf $CACHE_DIR/apache-couchdb-1.6.0.tar.gz -C $CACHE_DIR
     rm -f $CACHE_DIR/apache-couchdb-1.6.0.tar.gz
 fi
