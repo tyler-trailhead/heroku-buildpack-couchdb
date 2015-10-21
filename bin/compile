@@ -140,14 +140,15 @@ echo "-----> Setting port to $PORT"
 # change port and bind_address where openshift expects DIY apps to serve
 cat > $BUILD_DIR/etc/couchdb/local.ini << EOM
 [httpd]
-port = $PORT
+port = PORT
 bind_address = "0.0.0.0"
 EOM
 
 # configure proper folders
 cp -r $BUILD_DIR/* $FINAL_BUILD_DIR
 cd $FINAL_BUILD_DIR
-find . -type f -name "*" -exec sed -i'' -e 's/$BUILD_DIR/\/app/g' {} +
+
+#find . -type f -name "*" -exec sed -i'' -e 's/$BUILD_DIR/\/app/g' {} +
 
 echo "-----> Configuration copied"
 

@@ -3,6 +3,8 @@
 cat << EOF
 ---
 addons: []
+config_vars:
+  PATH: /usr/local/bin:/usr/bin:/bin:/app/usr/local/bin:/app/bin:/app/usr/bin/:/app/usr/sbin
 default_process_types:
-  couchdb: /app/etc/init.d/couchdb start
+  couchdb: sed -i .bak 's/PORT/$PORT/' /app/etc/couchdb/local.ini && /app/etc/init.d/couchdb start
 EOF
