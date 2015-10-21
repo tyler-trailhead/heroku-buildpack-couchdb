@@ -74,27 +74,27 @@ rm js
 echo "-----> Installed spidermonkey"
 
 
-if [ ! -e $CACHE_DIR/otp_src_17.1 ]; then
-    # get erlang
-    wget -O $CACHE_DIR/otp_src_17.1.tar.gz http://www.erlang.org/download/otp_src_17.1.tar.gz >> $LOG 2>&1
-    tar -xzf $CACHE_DIR/otp_src_17.1.tar.gz -C $CACHE_DIR >> $LOG 2>&1
-    rm -f $CACHE_DIR/otp_src_17.1.tar.gz
-    echo "-----> Downloaded erlang"
-fi
+# if [ ! -e $CACHE_DIR/otp_src_17.1 ]; then
+#     # get erlang
+#     wget -O $CACHE_DIR/otp_src_17.1.tar.gz http://www.erlang.org/download/otp_src_18.1.tar.gz >> $LOG 2>&1
+#     tar -xzf $CACHE_DIR/otp_src_17.1.tar.gz -C $CACHE_DIR >> $LOG 2>&1
+#     rm -f $CACHE_DIR/otp_src_17.1.tar.gz
+#     echo "-----> Downloaded erlang"
+# fi
 
 
-# some step ahead chokes if this file exists
+# # some step ahead chokes if this file exists
 
-# build and install erlang
-cd $CACHE_DIR/otp_src_17.1
-if [ ! -e ./.configured ]; then
-    ./configure --prefix=$BUILD_DIR/usr/ >> $LOG 2>&1
-    touch .configured
-    echo "-----> Configured erlang"
-fi
-make >> $LOG 2>&1
-make install >> $LOG 2>&1
-echo "-----> Installed erlang"
+# # build and install erlang
+# cd $CACHE_DIR/otp_src_17.1
+# if [ ! -e ./.configured ]; then
+#     ./configure --prefix=$BUILD_DIR/usr/ >> $LOG 2>&1
+#     touch .configured
+#     echo "-----> Configured erlang"
+# fi
+# make >> $LOG 2>&1
+# make install >> $LOG 2>&1
+# echo "-----> Installed erlang"
 
 
 if [ ! -e $CACHE_DIR/apache-couchdb-1.6.1 ]; then
