@@ -2,8 +2,9 @@
 
 # bin/compile BUILD_DIR CACHE_DIR ENV_DIR
 
-BUILD_DIR=$1
+FINAL_BUILD_DIR=$1
 CACHE_DIR=$2
+BUILD_DIR=$CACHE_DIR/app
 ENV_DIR=$3
 
 LOG=$BUILD_DIR/log
@@ -34,100 +35,96 @@ if [ ! -e $CACHE_DIR/icu ]; then
     wget -O $CACHE_DIR/icu4c-4_8_1_1-src.tgz http://download.icu-project.org/files/icu4c/4.8.1.1/icu4c-4_8_1_1-src.tgz > $LOG 2>&1
     tar -xzf $CACHE_DIR/icu4c-4_8_1_1-src.tgz -C $CACHE_DIR > $LOG 2>&1
     rm -f $CACHE_DIR/icu4c-4_8_1_1-src.tgz
-    echo "       -----> Downloaded icu"
+    echo "-----> Downloaded icu"
 fi
 
 # build and install ICU
 cd $CACHE_DIR/icu/source
 if [ ! -e ./.configured ]; then
-    ./configure --prefix=/app/usr/ > $LOG 2>&1
-    touch .configured
-    echo "       -----> Configured icu"
-fi
-make > $LOG 2>&1
-make install > $LOG 2>&1
-echo "       -----> Installed icu"
-
-cp -r /app/* $BUILD_DIR
-exit 0
-
-if [ ! -e $CACHE_DIR/js-1.8.5 ]; then
-    # get spidermonkey
-    wget -O $CACHE_DIR/js-1.8.5.tar.gz http://ftp.mozilla.org/pub/mozilla.org/js/js185-1.0.0.tar.gz > $LOG 2>&1
-    tar -xzf $CACHE_DIR/js-1.8.5.tar.gz -C $CACHE_DIR > $LOG 2>&1
-    rm -f $CACHE_DIR/js-1.8.5.tar.gz
-    echo "       -----> Downloaded spidermonkey"
-fi
-
-# build and install spidermonkey
-cd $CACHE_DIR/js-1.8.5/js/src
-if [ ! -e ./.configured ]; then
     ./configure --prefix=$BUILD_DIR/usr/ > $LOG 2>&1
     touch .configured
-    echo "       -----> Configured spidermonkey"
+    echo "-----> Configured icu"
 fi
 make > $LOG 2>&1
 make install > $LOG 2>&1
-rm js
-echo "       -----> Installed spidermonkey"
+echo "-----> Installed icu"
+
+# if [ ! -e $CACHE_DIR/js-1.8.5 ]; then
+#     # get spidermonkey
+#     wget -O $CACHE_DIR/js-1.8.5.tar.gz http://ftp.mozilla.org/pub/mozilla.org/js/js185-1.0.0.tar.gz > $LOG 2>&1
+#     tar -xzf $CACHE_DIR/js-1.8.5.tar.gz -C $CACHE_DIR > $LOG 2>&1
+#     rm -f $CACHE_DIR/js-1.8.5.tar.gz
+#     echo "-----> Downloaded spidermonkey"
+# fi
+
+# # build and install spidermonkey
+# cd $CACHE_DIR/js-1.8.5/js/src
+# if [ ! -e ./.configured ]; then
+#     ./configure --prefix=$BUILD_DIR/usr/ > $LOG 2>&1
+#     touch .configured
+#     echo "-----> Configured spidermonkey"
+# fi
+# make > $LOG 2>&1
+# make install > $LOG 2>&1
+# rm js
+# echo "-----> Installed spidermonkey"
 
 
-if [ ! -e $CACHE_DIR/otp_src_17.1 ]; then
-    # get erlang
-    wget -O $CACHE_DIR/otp_src_17.1.tar.gz http://www.erlang.org/download/otp_src_17.1.tar.gz > $LOG 2>&1
-    tar -xzf $CACHE_DIR/otp_src_17.1.tar.gz -C $CACHE_DIR > $LOG 2>&1
-    rm -f $CACHE_DIR/otp_src_17.1.tar.gz
-    echo "       -----> Downloaded erlang"
-fi
+# if [ ! -e $CACHE_DIR/otp_src_17.1 ]; then
+#     # get erlang
+#     wget -O $CACHE_DIR/otp_src_17.1.tar.gz http://www.erlang.org/download/otp_src_17.1.tar.gz > $LOG 2>&1
+#     tar -xzf $CACHE_DIR/otp_src_17.1.tar.gz -C $CACHE_DIR > $LOG 2>&1
+#     rm -f $CACHE_DIR/otp_src_17.1.tar.gz
+#     echo "-----> Downloaded erlang"
+# fi
 
 
-# some step ahead chokes if this file exists
+# # some step ahead chokes if this file exists
 
-# build and install erlang
-cd $CACHE_DIR/otp_src_17.1
-if [ ! -e ./.configured ]; then
-    ./configure --prefix=$BUILD_DIR/usr/ > $LOG 2>&1
-    touch .configured
-    echo "       -----> Configured erlang"
-fi
-make > $LOG 2>&1
-make install > $LOG 2>&1
-echo "       -----> Installed erlang"
-
-
-if [ ! -e $CACHE_DIR/apache-couchdb-1.6.0 ]; then
-    # get couchdb
-    wget -O $CACHE_DIR/apache-couchdb-1.6.0.tar.gz http://ftp.carnet.hr/misc/apache/couchdb/source/1.6.0/apache-couchdb-1.6.0.tar.gz > $LOG 2>&1
-    tar -xzf $CACHE_DIR/apache-couchdb-1.6.0.tar.gz -C $CACHE_DIR
-    rm -f $CACHE_DIR/apache-couchdb-1.6.0.tar.gz
-    echo "       -----> Downloaded couchdb"
-fi
+# # build and install erlang
+# cd $CACHE_DIR/otp_src_17.1
+# if [ ! -e ./.configured ]; then
+#     ./configure --prefix=$BUILD_DIR/usr/ > $LOG 2>&1
+#     touch .configured
+#     echo "-----> Configured erlang"
+# fi
+# make > $LOG 2>&1
+# make install > $LOG 2>&1
+# echo "-----> Installed erlang"
 
 
-# build couchdb
-cd $CACHE_DIR/apache-couchdb-1.6.0
-export PATH=$PATH:$BUILD_DIR/usr/bin/:$BUILD_DIR/usr/local/bin
-export ICU_CONFIG="$BUILD_DIR/usr/bin/icu-config --detect-prefix"
-export ICU_CPPFLAGS="-I$BUILD_DIR/usr/include/"
-if [ ! -e ./.configured ]; then
-    ./configure --prefix=$BUILD_DIR --with-js-lib=$BUILD_DIR/usr/lib/ --with-js-include=$BUILD_DIR/usr/include/js/ --with-erlang=$BUILD_DIR/usr/lib/erlang/usr/include/ > $LOG 2>&1
-    touch .configured
-    echo "-----> Configured couchdb"
-fi
-make > $LOG 2>&1
-make install > $LOG 2>&1
-echo "-----> Installed couchdb"
+# if [ ! -e $CACHE_DIR/apache-couchdb-1.6.0 ]; then
+#     # get couchdb
+#     wget -O $CACHE_DIR/apache-couchdb-1.6.0.tar.gz http://ftp.carnet.hr/misc/apache/couchdb/source/1.6.0/apache-couchdb-1.6.0.tar.gz > $LOG 2>&1
+#     tar -xzf $CACHE_DIR/apache-couchdb-1.6.0.tar.gz -C $CACHE_DIR
+#     rm -f $CACHE_DIR/apache-couchdb-1.6.0.tar.gz
+#     echo "-----> Downloaded couchdb"
+# fi
 
-# change port and bind_address where openshift expects DIY apps to serve
-cat > $BUILD_DIR/etc/couchdb/local.ini << EOM
-[httpd]
-port = $PORT
-bind_address = "0.0.0.0"
-EOM
 
-cd $BUILD_DIR
-find . -type f -name "*" -exec sed -i'' -e 's/$BUILD_DIR/\/app/g' {} +
-echo "-----> Fixed folder"
+# # build couchdb
+# cd $CACHE_DIR/apache-couchdb-1.6.0
+# export PATH=$PATH:$BUILD_DIR/usr/bin/:$BUILD_DIR/usr/local/bin
+# export ICU_CONFIG="$BUILD_DIR/usr/bin/icu-config --detect-prefix"
+# export ICU_CPPFLAGS="-I$BUILD_DIR/usr/include/"
+# if [ ! -e ./.configured ]; then
+#     ./configure --prefix=$BUILD_DIR --with-js-lib=$BUILD_DIR/usr/lib/ --with-js-include=$BUILD_DIR/usr/include/js/ --with-erlang=$BUILD_DIR/usr/lib/erlang/usr/include/ > $LOG 2>&1
+#     touch .configured
+#     echo "-----> Configured couchdb"
+# fi
+# make > $LOG 2>&1
+# make install > $LOG 2>&1
+# echo "-----> Installed couchdb"
+
+# # change port and bind_address where openshift expects DIY apps to serve
+# cat > $BUILD_DIR/etc/couchdb/local.ini << EOM
+# [httpd]
+# port = $PORT
+# bind_address = "0.0.0.0"
+# EOM
+
+mkdir -p $BUILD_DIR/etc/default/
+mkdir -p $BUILD_DIR/etc/couchdb/
 
 cat > $BUILD_DIR/etc/default/couchdb << EOM
 # Sourced by init script for configuration.
@@ -146,6 +143,10 @@ cat > $BUILD_DIR/etc/couchdb/local.ini << EOM
 port = $PORT
 bind_address = "0.0.0.0"
 EOM
+
+cp -r $BUILD_DIR/* $FINAL_BUILD_DIR
+cd $FINAL_BUILD_DIR
+find . -type f -name "*" -exec sed -i'' -e 's/$BUILD_DIR/\/app/g' {} +
 
 echo "-----> Configuration copied"
 
