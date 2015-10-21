@@ -13,7 +13,7 @@ fi
 
 # create dir to put all our stuff
 
-if [ ! -e icu ]; then
+if [ ! -e $CACHE_DIR/icu ]; then
     # get ICU
     wget -O $CACHE_DIR/icu4c-4_8_1_1-src.tgz http://download.icu-project.org/files/icu4c/4.8.1.1/icu4c-4_8_1_1-src.tgz
     tar -xzf $CACHE_DIR/icu4c-4_8_1_1-src.tgz -C $CACHE_DIR
@@ -45,7 +45,7 @@ fi
 make
 
 
-if [ ! -e otp_src_17.1 ]; then
+if [ ! -e $CACHE_DIR/otp_src_17.1 ]; then
     # get erlang
     wget -O $CACHE_DIR/otp_src_17.1.tar.gz http://www.erlang.org/download/otp_src_17.1.tar.gz
     tar -xzf $CACHE_DIR/otp_src_17.1.tar.gz -C $CACHE_DIR
