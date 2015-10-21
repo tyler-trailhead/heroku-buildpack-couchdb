@@ -93,9 +93,9 @@ fi
 
 # build couchdb
 cd $CACHE_DIR/apache-couchdb-1.6.0
-export PATH=$PATH:$CACHE_DIR/usr/bin/:$CACHE_DIR/usr/local/bin
-export ICU_CONFIG="$CACHE_DIR/usr/bin/icu-config --detect-prefix"
-export ICU_CPPFLAGS="-I$CACHE_DIR/usr/include/"
+export PATH=$PATH:$BUILD_DIR/usr/bin/:$BUILD_DIR/usr/local/bin
+export ICU_CONFIG="$BUILD_DIR/usr/bin/icu-config --detect-prefix"
+export ICU_CPPFLAGS="-I$BUILD_DIR/usr/include/"
 if [ ! -e ./.configured ]; then
     ./configure --prefix=$BUILD_DIR --with-js-lib=$BUILD_DIR/usr/lib/ --with-js-include=$BUILD_DIR/usr/include/js/ --with-erlang=$BUILD_DIR/usr/lib/erlang/usr/include/
     touch .configured
