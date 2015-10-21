@@ -8,6 +8,7 @@ BUILD_DIR=$CACHE_DIR/app
 ENV_DIR=$3
 
 LOG=$BUILD_DIR/log
+echo '' > $LOG
 
 export_env_dir() {
   env_dir=$ENV_DIR
@@ -27,13 +28,16 @@ export_env_dir()
 if [ ! -e $CACHE_DIR ]; then
     mkdir -p $CACHE_DIR
 fi
+if [ ! -e $BUILD_DIR ]; then
+    mkdir -p $BUILD_DIR
+fi
 
 # create dir to put all our stuff
 
 if [ ! -e $CACHE_DIR/icu ]; then
     # get ICU
-    wget -O $CACHE_DIR/icu4c-4_8_1_1-src.tgz http://download.icu-project.org/files/icu4c/4.8.1.1/icu4c-4_8_1_1-src.tgz > $LOG 2>&1
-    tar -xzf $CACHE_DIR/icu4c-4_8_1_1-src.tgz -C $CACHE_DIR > $LOG 2>&1
+    wget -O $CACHE_DIR/icu4c-4_8_1_1-src.tgz http://download.icu-project.org/files/icu4c/4.8.1.1/icu4c-4_8_1_1-src.tgz >> $LOG 2>&1
+    tar -xzf $CACHE_DIR/icu4c-4_8_1_1-src.tgz -C $CACHE_DIR >> $LOG 2>&1
     rm -f $CACHE_DIR/icu4c-4_8_1_1-src.tgz
     echo "-----> Downloaded icu"
 fi
@@ -41,18 +45,18 @@ fi
 # build and install ICU
 cd $CACHE_DIR/icu/source
 if [ ! -e ./.configured ]; then
-    ./configure --prefix=$BUILD_DIR/usr/ > $LOG 2>&1
+    ./configure --prefix=$BUILD_DIR/usr/ >> $LOG 2>&1
     touch .configured
     echo "-----> Configured icu"
 fi
-make > $LOG 2>&1
-make install > $LOG 2>&1
+make >> $LOG 2>&1
+make install >> $LOG 2>&1
 echo "-----> Installed icu"
 
 # if [ ! -e $CACHE_DIR/js-1.8.5 ]; then
 #     # get spidermonkey
 #     wget -O $CACHE_DIR/js-1.8.5.tar.gz http://ftp.mozilla.org/pub/mozilla.org/js/js185-1.0.0.tar.gz > $LOG 2>&1
-#     tar -xzf $CACHE_DIR/js-1.8.5.tar.gz -C $CACHE_DIR > $LOG 2>&1
+#     tar -xzf $CACHE_DIR/js-1.8.5.tar.gz -C $CACHE_DIR >> $LOG 2>&1
 #     rm -f $CACHE_DIR/js-1.8.5.tar.gz
 #     echo "-----> Downloaded spidermonkey"
 # fi
@@ -60,20 +64,20 @@ echo "-----> Installed icu"
 # # build and install spidermonkey
 # cd $CACHE_DIR/js-1.8.5/js/src
 # if [ ! -e ./.configured ]; then
-#     ./configure --prefix=$BUILD_DIR/usr/ > $LOG 2>&1
+#     ./configure --prefix=$BUILD_DIR/usr/ >> $LOG 2>&1
 #     touch .configured
 #     echo "-----> Configured spidermonkey"
 # fi
-# make > $LOG 2>&1
-# make install > $LOG 2>&1
+# make >> $LOG 2>&1
+# make install >> $LOG 2>&1
 # rm js
 # echo "-----> Installed spidermonkey"
 
 
 # if [ ! -e $CACHE_DIR/otp_src_17.1 ]; then
 #     # get erlang
-#     wget -O $CACHE_DIR/otp_src_17.1.tar.gz http://www.erlang.org/download/otp_src_17.1.tar.gz > $LOG 2>&1
-#     tar -xzf $CACHE_DIR/otp_src_17.1.tar.gz -C $CACHE_DIR > $LOG 2>&1
+#     wget -O $CACHE_DIR/otp_src_17.1.tar.gz http://www.erlang.org/download/otp_src_17.1.tar.gz >> $LOG 2>&1
+#     tar -xzf $CACHE_DIR/otp_src_17.1.tar.gz -C $CACHE_DIR >> $LOG 2>&1
 #     rm -f $CACHE_DIR/otp_src_17.1.tar.gz
 #     echo "-----> Downloaded erlang"
 # fi
@@ -84,19 +88,19 @@ echo "-----> Installed icu"
 # # build and install erlang
 # cd $CACHE_DIR/otp_src_17.1
 # if [ ! -e ./.configured ]; then
-#     ./configure --prefix=$BUILD_DIR/usr/ > $LOG 2>&1
+#     ./configure --prefix=$BUILD_DIR/usr/ >> $LOG 2>&1
 #     touch .configured
 #     echo "-----> Configured erlang"
 # fi
-# make > $LOG 2>&1
-# make install > $LOG 2>&1
+# make >> $LOG 2>&1
+# make install >> $LOG 2>&1
 # echo "-----> Installed erlang"
 
 
 # if [ ! -e $CACHE_DIR/apache-couchdb-1.6.0 ]; then
 #     # get couchdb
-#     wget -O $CACHE_DIR/apache-couchdb-1.6.0.tar.gz http://ftp.carnet.hr/misc/apache/couchdb/source/1.6.0/apache-couchdb-1.6.0.tar.gz > $LOG 2>&1
-#     tar -xzf $CACHE_DIR/apache-couchdb-1.6.0.tar.gz -C $CACHE_DIR
+#     wget -O $CACHE_DIR/apache-couchdb-1.6.0.tar.gz http://ftp.carnet.hr/misc/apache/couchdb/source/1.6.0/apache-couchdb-1.6.0.tar.gz >> $LOG 2>&1
+#     tar -xzf $CACHE_DIR/apache-couchdb-1.6.0.tar.gz -C $CACHE_DIR >> $LOG 2>&1
 #     rm -f $CACHE_DIR/apache-couchdb-1.6.0.tar.gz
 #     echo "-----> Downloaded couchdb"
 # fi
@@ -108,12 +112,12 @@ echo "-----> Installed icu"
 # export ICU_CONFIG="$BUILD_DIR/usr/bin/icu-config --detect-prefix"
 # export ICU_CPPFLAGS="-I$BUILD_DIR/usr/include/"
 # if [ ! -e ./.configured ]; then
-#     ./configure --prefix=$BUILD_DIR --with-js-lib=$BUILD_DIR/usr/lib/ --with-js-include=$BUILD_DIR/usr/include/js/ --with-erlang=$BUILD_DIR/usr/lib/erlang/usr/include/ > $LOG 2>&1
+#     ./configure --prefix=$BUILD_DIR --with-js-lib=$BUILD_DIR/usr/lib/ --with-js-include=$BUILD_DIR/usr/include/js/ --with-erlang=$BUILD_DIR/usr/lib/erlang/usr/include/ >> $LOG 2>&1
 #     touch .configured
 #     echo "-----> Configured couchdb"
 # fi
-# make > $LOG 2>&1
-# make install > $LOG 2>&1
+# make >> $LOG 2>&1
+# make install >> $LOG 2>&1
 # echo "-----> Installed couchdb"
 
 # # change port and bind_address where openshift expects DIY apps to serve
