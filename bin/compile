@@ -26,7 +26,7 @@ if [ ! -e ./.configured ]; then
     ./configure --prefix=$CACHE_DIR/usr/
     touch .configured
 fi
-make
+make && make install
 
 
 if [ ! -e $CACHE_DIR/js-1.8.5 ]; then
@@ -42,7 +42,7 @@ if [ ! -e ./.configured ]; then
     ./configure --prefix=$CACHE_DIR/usr/
     touch .configured
 fi
-make
+make && make install
 
 
 if [ ! -e $CACHE_DIR/otp_src_17.1 ]; then
@@ -62,7 +62,7 @@ if [ ! -e ./.configured ]; then
     ./configure --prefix=$CACHE_DIR/usr/
     touch .configured
 fi
-make
+make && make install
 
 
 if [ ! -e $CACHE_DIR/apache-couchdb-1.6.0 ]; then
@@ -82,4 +82,4 @@ if [ ! -e ./.configured ]; then
     ./configure --prefix=$CACHE_DIR --with-js-lib=$CACHE_DIR/usr/lib/ --with-js-include=$CACHE_DIR/usr/include/js/ --with-erlang=$CACHE_DIR/usr/lib/erlang/usr/include/
     touch .configured
 fi
-make
+make && make install
