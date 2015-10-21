@@ -5,6 +5,7 @@
 BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
+LP_DIR=`cd $(dirname $0); cd ..; pwd`
 
 if [ ! -e $CACHE_DIR ]; then
     mkdir -p $CACHE_DIR
@@ -12,34 +13,12 @@ fi
 
 # create dir to put all our stuff
 
-if [ ! -e $CACHE_DIR/js-1.8.5 ]; then
-    # get spidermonkey
-    wget -O $CACHE_DIR/js.tar.gz http://ftp.mozilla.org/pub/mozilla.org/js/js185-1.0.0.tar.gz 
-    tar -xzf $CACHE_DIR/js.tar.gz -C $CACHE_DIR
-    rm -f $CACHE_DIR/js.tar.gz
-fi
-
-if [ ! -e otp_src_17.1 ]; then
-    # get erlang
-    wget -O $CACHE_DIR/otp_src_17.1.tar.gz http://www.erlang.org/download/otp_src_17.1.tar.gz
-    tar -xzf $CACHE_DIR/otp_src_17.1.tar.gz -C $CACHE_DIR
-    rm -f $CACHE_DIR/otp_src_17.1.tar.gz
-fi
-
-if [ ! -e apache-couchdb-1.6.0 ]; then
-    # get couchdb
-    wget -O $CACHE_DIR/ http://ftp.carnet.hr/misc/apache/couchdb/source/1.6.0/apache-couchdb-1.6.0.tar.gz
-    tar -xzf $CACHE_DIR/apache-couchdb-1.6.0.tar.gz -C $CACHE_DIR
-    rm -f $CACHE_DIR/apache-couchdb-1.6.0.tar.gz
-fi
-
 if [ ! -e icu ]; then
     # get ICU
     wget -O $CACHE_DIR/icu4c-4_8_1_1-src.tgz http://download.icu-project.org/files/icu4c/4.8.1.1/icu4c-4_8_1_1-src.tgz
     tar -xzf $CACHE_DIR/icu4c-4_8_1_1-src.tgz -C $CACHE_DIR
     rm -f $CACHE_DIR/icu4c-4_8_1_1-src.tgz
 fi
-
 
 # build and install ICU
 cd $CACHE_DIR/icu/source
@@ -49,6 +28,14 @@ if [ ! -e ./.configured ]; then
 fi
 make
 
+
+if [ ! -e $CACHE_DIR/js-1.8.5 ]; then
+    # get spidermonkey
+    wget -O $CACHE_DIR/js-1.8.5.tar.gz http://ftp.mozilla.org/pub/mozilla.org/js/js185-1.0.0.tar.gz 
+    tar -xzf $CACHE_DIR/js-1.8.5.tar.gz -C $CACHE_DIR
+    rm -f $CACHE_DIR/js-1.8.5.tar.gz
+fi
+
 # build and install spidermonkey
 cd $CACHE_DIR/js-1.8.5/js/src
 if [ ! -e ./.configured ]; then
@@ -56,18 +43,40 @@ if [ ! -e ./.configured ]; then
     touch .configured
 fi
 make
+
+
+if [ ! -e otp_src_17.1 ]; then
+    # get erlang
+    wget -O $CACHE_DIR/otp_src_17.1.tar.gz http://www.erlang.org/download/otp_src_17.1.tar.gz
+    tar -xzf $CACHE_DIR/otp_src_17.1.tar.gz -C $CACHE_DIR
+    rm -f $CACHE_DIR/otp_src_17.1.tar.gz
+fi
+
+
 # some step ahead chokes if this file exists
 # rm js
 
 # build and install erlang
 cd $CACHE_DIR/otp_src_17.1
-./configure --prefix=$CACHE_DIR/usr/
+if [ ! -e ./.configured ]; then
+    ./configure --prefix=$CACHE_DIR/usr/
+    touch .configured
 make
 
+
+# if [ ! -e apache-couchdb-1.6.0 ]; then
+#     # get couchdb
+#     wget -O $CACHE_DIR/ http://ftp.carnet.hr/misc/apache/couchdb/source/1.6.0/apache-couchdb-1.6.0.tar.gz
+#     tar -xzf $CACHE_DIR/apache-couchdb-1.6.0.tar.gz -C $CACHE_DIR
+#     rm -f $CACHE_DIR/apache-couchdb-1.6.0.tar.gz
+# fi
+
+
+
 # build couchdb
-cd $BASEPATH/apache-couchdb-1.6.0
-export PATH=$PATH:$CACHE_DIR/usr/bin/:$CACHE_DIR/usr/local/bin
-export ICU_CONFIG="$CACHE_DIR/usr/bin/icu-config --detect-prefix"
-export ICU_CPPFLAGS="-I$CACHE_DIR/usr/include/"
-./configure --prefix=$CACHE_DIR --with-js-lib=$CACHE_DIR/usr/lib/ --with-js-include=$CACHE_DIR/usr/include/js/ --with-erlang=$CACHE_DIR/usr/lib/erlang/usr/include/
-make
+#cd $BASEPATH/apache-couchdb-1.6.0
+#export PATH=$PATH:$CACHE_DIR/usr/bin/:$CACHE_DIR/usr/local/bin
+#export ICU_CONFIG="$CACHE_DIR/usr/bin/icu-config --detect-prefix"
+#export ICU_CPPFLAGS="-I$CACHE_DIR/usr/include/"
+#./configure --prefix=$CACHE_DIR --with-js-lib=$CACHE_DIR/usr/lib/ --with-js-include=$CACHE_DIR/usr/include/js/ --with-erlang=$CACHE_DIR/usr/lib/erlang/usr/include/
+#make
