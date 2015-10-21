@@ -22,10 +22,10 @@ fi
 
 # build and install ICU
 cd $CACHE_DIR/icu/source
-if [ ! -e ./.configured ]; then
-    ./configure --prefix=$CACHE_DIR/usr/
+# if [ ! -e ./.configured ]; then
+    ./configure --prefix=$BUILD_DIR/usr/
     touch .configured
-fi
+# fi
 make && make install
 
 
@@ -38,10 +38,10 @@ fi
 
 # build and install spidermonkey
 cd $CACHE_DIR/js-1.8.5/js/src
-if [ ! -e ./.configured ]; then
-    ./configure --prefix=$CACHE_DIR/usr/
+# if [ ! -e ./.configured ]; then
+    ./configure --prefix=$BUILD_DIR/usr/
     touch .configured
-fi
+# fi
 make && make install
 
 
@@ -58,10 +58,10 @@ fi
 
 # build and install erlang
 cd $CACHE_DIR/otp_src_17.1
-if [ ! -e ./.configured ]; then
-    ./configure --prefix=$CACHE_DIR/usr/
+# if [ ! -e ./.configured ]; then
+    ./configure --prefix=$BUILD_DIR/usr/
     touch .configured
-fi
+# fi
 make && make install
 
 
@@ -78,8 +78,8 @@ cd $CACHE_DIR/apache-couchdb-1.6.0
 export PATH=$PATH:$CACHE_DIR/usr/bin/:$CACHE_DIR/usr/local/bin
 export ICU_CONFIG="$CACHE_DIR/usr/bin/icu-config --detect-prefix"
 export ICU_CPPFLAGS="-I$CACHE_DIR/usr/include/"
-if [ ! -e ./.configured ]; then
-    ./configure --prefix=$CACHE_DIR --with-js-lib=$CACHE_DIR/usr/lib/ --with-js-include=$CACHE_DIR/usr/include/js/ --with-erlang=$CACHE_DIR/usr/lib/erlang/usr/include/
+# if [ ! -e ./.configured ]; then
+    ./configure --prefix=$BUILD_DIR --with-js-lib=$BUILD_DIR/usr/lib/ --with-js-include=$BUILD_DIR/usr/include/js/ --with-erlang=$BUILD_DIR/usr/lib/erlang/usr/include/
     touch .configured
-fi
+# fi
 make && make install
