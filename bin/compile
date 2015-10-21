@@ -61,6 +61,7 @@ cd $CACHE_DIR/otp_src_17.1
 if [ ! -e ./.configured ]; then
     ./configure --prefix=$CACHE_DIR/usr/
     touch .configured
+fi
 make
 
 
