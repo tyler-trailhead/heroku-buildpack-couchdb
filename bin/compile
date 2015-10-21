@@ -104,20 +104,20 @@ make > /dev/null && make install > /dev/null
 echo "Installed couchdb"
 
 
-cat > $BUILD_DIR/etc/default/couchdb << EOM
-# Sourced by init script for configuration.
+# cat > $BUILD_DIR/etc/default/couchdb << EOM
+# # Sourced by init script for configuration.
 
-# we use the current username to run couchdb
-#COUCHDB_USER=couchdb
-COUCHDB_STDOUT_FILE=/dev/null
-COUCHDB_STDERR_FILE=/dev/null
-COUCHDB_RESPAWN_TIMEOUT=5
-COUCHDB_OPTIONS=
-EOM
+# # we use the current username to run couchdb
+# #COUCHDB_USER=couchdb
+# COUCHDB_STDOUT_FILE=/dev/null
+# COUCHDB_STDERR_FILE=/dev/null
+# COUCHDB_RESPAWN_TIMEOUT=5
+# COUCHDB_OPTIONS=
+# EOM
 
-# change port and bind_address where openshift expects DIY apps to serve
-cat > $BUILD_DIR/etc/couchdb/local.ini << EOM
-[httpd]
-port = $PORT
-bind_address = "0.0.0.0"
-EOM
+# # change port and bind_address where openshift expects DIY apps to serve
+# cat > $BUILD_DIR/etc/couchdb/local.ini << EOM
+# [httpd]
+# port = $PORT
+# bind_address = "0.0.0.0"
+# EOM
