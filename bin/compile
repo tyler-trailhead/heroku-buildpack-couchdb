@@ -34,7 +34,7 @@ if [ ! -e $CACHE_DIR/icu ]; then
     wget -O $CACHE_DIR/icu4c-4_8_1_1-src.tgz http://download.icu-project.org/files/icu4c/4.8.1.1/icu4c-4_8_1_1-src.tgz > $LOG 2>&1
     tar -xzf $CACHE_DIR/icu4c-4_8_1_1-src.tgz -C $CACHE_DIR > $LOG 2>&1
     rm -f $CACHE_DIR/icu4c-4_8_1_1-src.tgz
-    echo "-----> Downloaded icu"
+    echo "       -----> Downloaded icu"
 fi
 
 # build and install ICU
@@ -42,12 +42,13 @@ cd $CACHE_DIR/icu/source
 if [ ! -e ./.configured ]; then
     ./configure --prefix=/app/usr/ > $LOG 2>&1
     touch .configured
-    echo "-----> Configured icu"
+    echo "       -----> Configured icu"
 fi
 make > $LOG 2>&1
 make install > $LOG 2>&1
-echo "-----> Installed icu"
+echo "       -----> Installed icu"
 
+cp -r /app/* $BUILD_DIR
 exit 0
 
 if [ ! -e $CACHE_DIR/js-1.8.5 ]; then
@@ -55,7 +56,7 @@ if [ ! -e $CACHE_DIR/js-1.8.5 ]; then
     wget -O $CACHE_DIR/js-1.8.5.tar.gz http://ftp.mozilla.org/pub/mozilla.org/js/js185-1.0.0.tar.gz > $LOG 2>&1
     tar -xzf $CACHE_DIR/js-1.8.5.tar.gz -C $CACHE_DIR > $LOG 2>&1
     rm -f $CACHE_DIR/js-1.8.5.tar.gz
-    echo "-----> Downloaded spidermonkey"
+    echo "       -----> Downloaded spidermonkey"
 fi
 
 # build and install spidermonkey
@@ -63,12 +64,12 @@ cd $CACHE_DIR/js-1.8.5/js/src
 if [ ! -e ./.configured ]; then
     ./configure --prefix=$BUILD_DIR/usr/ > $LOG 2>&1
     touch .configured
-    echo "-----> Configured spidermonkey"
+    echo "       -----> Configured spidermonkey"
 fi
 make > $LOG 2>&1
 make install > $LOG 2>&1
 rm js
-echo "-----> Installed spidermonkey"
+echo "       -----> Installed spidermonkey"
 
 
 if [ ! -e $CACHE_DIR/otp_src_17.1 ]; then
@@ -76,7 +77,7 @@ if [ ! -e $CACHE_DIR/otp_src_17.1 ]; then
     wget -O $CACHE_DIR/otp_src_17.1.tar.gz http://www.erlang.org/download/otp_src_17.1.tar.gz > $LOG 2>&1
     tar -xzf $CACHE_DIR/otp_src_17.1.tar.gz -C $CACHE_DIR > $LOG 2>&1
     rm -f $CACHE_DIR/otp_src_17.1.tar.gz
-    echo "-----> Downloaded erlang"
+    echo "       -----> Downloaded erlang"
 fi
 
 
@@ -87,11 +88,11 @@ cd $CACHE_DIR/otp_src_17.1
 if [ ! -e ./.configured ]; then
     ./configure --prefix=$BUILD_DIR/usr/ > $LOG 2>&1
     touch .configured
-    echo "-----> Configured erlang"
+    echo "       -----> Configured erlang"
 fi
 make > $LOG 2>&1
 make install > $LOG 2>&1
-echo "-----> Installed erlang"
+echo "       -----> Installed erlang"
 
 
 if [ ! -e $CACHE_DIR/apache-couchdb-1.6.0 ]; then
@@ -99,7 +100,7 @@ if [ ! -e $CACHE_DIR/apache-couchdb-1.6.0 ]; then
     wget -O $CACHE_DIR/apache-couchdb-1.6.0.tar.gz http://ftp.carnet.hr/misc/apache/couchdb/source/1.6.0/apache-couchdb-1.6.0.tar.gz > $LOG 2>&1
     tar -xzf $CACHE_DIR/apache-couchdb-1.6.0.tar.gz -C $CACHE_DIR
     rm -f $CACHE_DIR/apache-couchdb-1.6.0.tar.gz
-    echo "-----> Downloaded couchdb"
+    echo "       -----> Downloaded couchdb"
 fi
 
 
