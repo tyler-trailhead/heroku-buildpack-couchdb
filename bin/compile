@@ -65,19 +65,21 @@ fi
 make
 
 
-# if [ ! -e apache-couchdb-1.6.0 ]; then
-#     # get couchdb
-#     wget -O $CACHE_DIR/ http://ftp.carnet.hr/misc/apache/couchdb/source/1.6.0/apache-couchdb-1.6.0.tar.gz
-#     tar -xzf $CACHE_DIR/apache-couchdb-1.6.0.tar.gz -C $CACHE_DIR
-#     rm -f $CACHE_DIR/apache-couchdb-1.6.0.tar.gz
-# fi
-
+if [ ! -e $CACHE_DIR/apache-couchdb-1.6.0 ]; then
+    # get couchdb
+    wget -O $CACHE_DIR/ http://ftp.carnet.hr/misc/apache/couchdb/source/1.6.0/apache-couchdb-1.6.0.tar.gz
+    tar -xzf $CACHE_DIR/apache-couchdb-1.6.0.tar.gz -C $CACHE_DIR
+    rm -f $CACHE_DIR/apache-couchdb-1.6.0.tar.gz
+fi
 
 
 # build couchdb
-#cd $BASEPATH/apache-couchdb-1.6.0
-#export PATH=$PATH:$CACHE_DIR/usr/bin/:$CACHE_DIR/usr/local/bin
-#export ICU_CONFIG="$CACHE_DIR/usr/bin/icu-config --detect-prefix"
-#export ICU_CPPFLAGS="-I$CACHE_DIR/usr/include/"
-#./configure --prefix=$CACHE_DIR --with-js-lib=$CACHE_DIR/usr/lib/ --with-js-include=$CACHE_DIR/usr/include/js/ --with-erlang=$CACHE_DIR/usr/lib/erlang/usr/include/
-#make
+cd $CACHE_DIR/apache-couchdb-1.6.0
+export PATH=$PATH:$CACHE_DIR/usr/bin/:$CACHE_DIR/usr/local/bin
+export ICU_CONFIG="$CACHE_DIR/usr/bin/icu-config --detect-prefix"
+export ICU_CPPFLAGS="-I$CACHE_DIR/usr/include/"
+if [ ! -e ./.configured ]; then
+    ./configure --prefix=$CACHE_DIR --with-js-lib=$CACHE_DIR/usr/lib/ --with-js-include=$CACHE_DIR/usr/include/js/ --with-erlang=$CACHE_DIR/usr/lib/erlang/usr/include/
+    touch .configured
+fi
+make
