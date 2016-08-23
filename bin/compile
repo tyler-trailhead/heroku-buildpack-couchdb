@@ -29,11 +29,21 @@ if [ ! -e $BUILD_DIR ]; then
     mkdir -p $BUILD_DIR
 fi
 
+
 LOG=$BUILD_DIR/log
 echo '' > $LOG
 
-# create dir to put all our stuff
+echo "==============================="
+echo $FINAL_BUILD_DIR
+echo $CACHE_DIR=
+echo $BUILD_DIR
+echo $ENV_DIR
+echo $LOG
+echo "==============================="
 
+exit 1
+
+# create dir to put all our stuff
 if [ ! -e $CACHE_DIR/icu ]; then
     # get ICU
     wget -O $CACHE_DIR/icu4c-4_8_1_1-src.tgz http://download.icu-project.org/files/icu4c/4.8.1.1/icu4c-4_8_1_1-src.tgz >> $LOG 2>&1
